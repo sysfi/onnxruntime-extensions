@@ -258,7 +258,11 @@ class VocabData {
 
   int GetEncoding(const std::string& key) {
     auto it = vocab_map_.find(key);
-    return it->second;
+    if (it != end(vocab_map_))
+    {
+      return it->second;
+    }
+    return -1;
   }
 
   size_t VocabSize() const { return vocab_map_.size(); }
