@@ -73,7 +73,11 @@ std::vector<int64_t> KernelClipBpeTokenizer::Tokenize(ustring& input, int64_t ma
       for (int i = 0; i < utf8_token.length(); i++) {
         if (i == utf8_token.length() - 1) {
           std::string boundary(1, utf8_token[i]);
-          byte_list_.push_back(bbpe_tokenizer_->GetEncoding(boundary + "</w>"));
+          auto const token = bbpe_tokenizer_->GetEncoding(boundary + "</w>");
+          if (token != -1)
+          {
+            byte_list_.push_back(token);
+          }
         } else {
           byte_list_.push_back(bbpe_tokenizer_->ByteEncoder()[static_cast<unsigned char>(utf8_token[i])]);
         }
